@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="author" content="BeneDeFi">
+    <meta name="keywords" content="Paranora,Furniture,Product,List,Page">
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="copyright" content="2025 company.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="decentralized exchange">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="flex justify-center bg-black">
+    <div class="flex justify-center text-center items-center mt-10 mx-10">
+        <div class="bg-gray-200 p-10 rounded-2xl">
+            <div class="space-y-3">
+                <p for="">Enter Your UserName</p>
+                <input type="text" id="username" placeholder="Enter Your UserName" class="p-2 rounded placeholder-gray-300 focus:outline-none">
+                <p for="">Enter Your Password</p>
+                <input type="password" id="password" placeholder="Enter Your Password" class="p-2 rounded placeholder-gray-300 focus:outline-none">
+            </div>
+            <button class="px-5 py-2 bg-blue-700 rounded-xl mt-3 text-gray-300" id="loginButton">Login</button>
+            <p id="error-message" class="text-red-500 mt-3"></p>
+            <p class="my-3">Don't have an account? <span id="register" class="cursor-pointer text-blue-700">Register</span></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginButton').addEventListener('click', function() {
+            let enteredUsername = document.getElementById('username').value;
+            let enteredPassword = document.getElementById('password').value;
+
+            let storedUserData = localStorage.getItem('userData');
+            
+
+            if (storedUserData) {
+                let userData = JSON.parse(storedUserData);
+                
+
+                if (enteredUsername === userData.username && enteredPassword === userData.password) {
+
+                    localStorage.setItem('isLoggedIn', 'true');
+
+                    setTimeout(() =>{
+                        window.location.href = "todo.html";
+                    },1000)
+                } else {
+
+                    document.getElementById('error-message').textContent = "Incorrect username or password.";
+                }
+            } else {
+
+                document.getElementById('error-message').textContent = "No user found. Please register first.";
+            }
+        });
+
+        let register = document.querySelector('#register');
+
+        register.addEventListener('click', () =>{
+            setTimeout(() => {
+                window.location.href = "index.html"
+            }, 1000)
+        })
+    </script>
+</body>
+</html>

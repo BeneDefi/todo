@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="author" content="BeneDeFi">
+    <meta name="keywords" content="Paranora,Furniture,Product,List,Page">
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="copyright" content="2025 company.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="decentralized exchange">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Todo </title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div>
+        <div class="text-center items-center m-5">
+            <h1 id="welcome" class="font-medium text-5xl m-5"></h1>
+            <div class="inline-flex items-center rounded-full">
+                <input id="input-todo" type="text" placeholder="Enter Todo" class="bg-gray-300 text-gray-700 py-3 px-5 text-base outline-none rounded-full">
+                <div class="ml-44 z-50 absolute">
+                    <button id="add-todo-btn" class="bg-black text-white py-2 px-4 text-base font-bold rounded-full cursor-pointer">Add Todo</button>
+                </div>
+                <div class="ml-5">
+                    <button id="logout-btn" class="px-5 py-2 rounded-full bg-blue-800 text-white hover:bg-transparent hover:text-black hover:border border-blue-900">Logout</button>
+                </div>
+            </div>
+            <div class="m-5">
+                <p class="text-gray-800 text-xl">User Guide: click on this <span class="bg-white border border-gray-700 rounded-full px-3 mx-1"></span> in the todo list to tick completed todo's.</p>
+            </div>
+            <div>
+                <div class="flex justify-center text-center items-center">
+                    <p id="todo" class="px-5 py-3 text-xl rounded-3xl"></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <!-- <p class="line-through"></p> -->
+    <script>
+        let inputTodo = document.querySelector('#input-todo');
+        let addTodoBtn = document.querySelector('#add-todo-btn');
+        let todo = document.querySelector('#todo');
+        let welcome = document.querySelector('#welcome');
+        let logoutBtn = document.querySelector('#logout-btn')
+
+
+        document.addEventListener('DOMContentLoaded',() =>{
+            let storedUsersData =  localStorage.getItem('userData')
+
+            if (storedUsersData){
+                let userData = JSON.parse(storedUsersData)
+                if (userData.username){
+                    welcome.innerHTML = `Welcome <span class="font-medium text-5xl text-blue-900">${userData.name}</span>`
+                }
+            }
+        })
+        
+        addTodoBtn.addEventListener('click', () => {
+            let todoText = inputTodo.value;
+            if (todoText) {
+                todo.innerHTML += `<div class="flex items-center justify-between bg-gray-50 text-gray-700 py-3 px-5 text-base shadow-lg rounded-full mt-5">
+                    <div id="check" class="bg-white border items-center text-center border-black rounded-full w-6 h-6"></div>
+                    <p id = "text" class="px-5 py-2">${todoText}</p>
+                    <i id="delete" class="fa-solid fa-trash text-xl"></i>
+                </div>`;
+                inputTodo.value = '';
+            }
+
+            let todoData = todo;
+            localStorage.setItem('todoData', JSON.stringify(todoData))
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.getItem('todoData')
+
+        });
+        
+        todo.addEventListener('click', (e) => {
+           
+            if (e.target.id === 'delete') {
+                e.target.parentElement.remove();
+            }
+        
+            if (e.target.id === 'check') {
+            const textElement = e.target.closest('.flex').querySelector('#text');
+            // Toggle tick mark
+            if (e.target.innerHTML === "") {
+                e.target.innerHTML = `<i id="checkTick" class="fa-solid fa-check px-1 py-1 text-white rounded-full bg-blue-700"></i>`;
+            } else {
+                e.target.innerHTML = "";  // Remove the tick mark
+            }
+            
+            // Toggle the line-through class on the text element
+            if (textElement.classList.contains('line-through')) {
+                textElement.classList.remove('line-through');
+            } else {
+                textElement.classList.add('line-through');
+            }
+          }
+          
+        //     if (e.target.id === 'check') {
+        //         e.target.innerHTML = `<i id="checkTick" class="fa-solid fa-check px-1 py-1 text-white rounded-full bg-blue-700"></i>`;
+        //     }
+        
+        //     if (e.target.id === 'text') {
+        //      if (e.target.classList.contains('line-through')) {
+        //          e.target.classList.remove('line-through'); 
+        //          e.target.textContent = todoText;
+        //      } else {
+        //          e.target.classList.add('line-through');
+        //          e.target.textContent = todoText; 
+        //      }
+        //   }     
+
+            if (e.target.id === 'checkTick') {
+                const checkDiv = e.target.closest('.flex').querySelector('#check');
+                checkDiv.innerHTML = ""; 
+            }
+        });
+
+        logoutBtn.addEventListener('click',() => {
+            if (logoutBtn){
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                })
+            }
+        })
+    </script>
+    <!-- <script src="todo.js"></script> -->
+</body>
+</html>

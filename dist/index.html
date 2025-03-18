@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="author" content="BeneDeFi">
+    <meta name="keywords" content="Paranora,Furniture,Product,List,Page">
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="copyright" content="2025 company.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="decentralized exchange">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="flex justify-center bg-black mx-10">
+    <div class="text-center items-center my-10 p-5 bg-gray-200 w-[600px] rounded-2xl">
+        <h1 class="font-semibold text-2xl text-center">Register</h1>
+        <div class="space-y-5 p-2">
+            <div>
+                <p id="response" class="py-3 font-medium text-xl"></p>
+            </div>
+            <div>
+                <p>Start Registration</p>
+            </div>
+            <div>
+                <!-- <label for="name">Name</label> -->
+                <input type="text" id="name" placeholder="Enter Name" class="border border-gray-400 rounded-md p-2" onkeydown="clear('#name-error')">
+                <p id="name-error"></p>
+            </div>
+            <div>
+                <!-- <label for="username">Username</label> -->
+                <input type="text" id="username" placeholder="Enter UserName" class="border border-gray-400 rounded-md p-2" onkeydown="clear('userNName-error')">
+                <p id="userName-error"></p>
+            </div>
+            <div>
+                <!-- <label for="password">Create Password</label> -->
+                <input type="password" id="password" placeholder="Create Password" class="border border-gray-400 rounded-md p-2" onkeydown="clear('#password-error')">
+                <p id="password-error"></p>
+            </div>
+            <div>
+                <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Register</button>
+            </div>
+        </div>
+
+        <p>Do you have an account already? <span id="login" class="cursor-pointer text-blue-700">Login</span></p>
+    </div>
+    
+    <script>
+        let btn = document.querySelector("button")
+        
+        function clear(select){
+            document.querySelector(select).textContent = ""
+        }
+
+        btn.addEventListener("click", () => {
+            let name = document.querySelector("#name").value
+            let username = document.querySelector("#username").value
+            let password = document.querySelector("#password").value
+
+            if(name === "" || username === "" || password === ""){
+                document.querySelector("#response").textContent = "All fields are required"
+                document.querySelector("#response").style.color = "red"
+                if (name === ""){
+                document.querySelector("#name-error").textContent = "Input Name"
+                document.querySelector("#name-error").style.color = "red"
+                } else{
+                    document.querySelector("#name-error").textContent = ""
+                }
+                if (username === ""){
+                document.querySelector("#userName-error").textContent = "Input User Name"
+                document.querySelector("#userName-error").style.color = "red"
+                } else{
+                    document.querySelector("#userName-error").textContent = ""
+                }
+                if (password === ""){
+                document.querySelector("#password-error").textContent = "Input Password"
+                document.querySelector("#password-error").style.color = "red"
+                } else{
+                    document.querySelector("#password-error").textContent = ""
+                }
+            }else{
+                document.querySelector("#response").textContent = "Registration Successful"
+                document.querySelector("#response").style.color = "green"
+
+                let userData = { name, username, password };
+                localStorage.setItem('userData', JSON.stringify(userData));
+
+                localStorage.setItem('isLoggedIn', 'true');
+
+
+                setTimeout(() => {
+                    window.location.href = "login.html";
+                }, 1000); 
+            }
+
+        })
+
+        let login = document.querySelector('#login')
+        login.addEventListener('click', () => {
+            if (login){
+                setTimeout(() =>{
+                    window.location.href = "login.html"
+                }, 1000)
+            }
+        })
+    </script>
+</body>
+</html>
